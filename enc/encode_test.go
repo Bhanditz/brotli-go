@@ -15,9 +15,8 @@ func TestBufferSizes(T *testing.T) {
 	params := NewBrotliParams()
 	params.SetQuality(testQuality)
 
-	input1 := []byte(strings.Repeat("The quick brown fox jumps over the lazy dog", 100000))
+	input1 := bytes.Repeat([]byte("The quick brown fox jumps over the lazy dog. "), 100000)
 	log.Printf("q=%d, inputSize=%d\n", params.Quality(), len(input1))
-
 	output1 := make([]byte, len(input1)*2)
 	_, err := CompressBuffer(params, input1, output1)
 	if err != nil {
