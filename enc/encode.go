@@ -251,6 +251,7 @@ func NewBrotliWriter(params *BrotliParams, writer io.Writer) *BrotliWriter {
 }
 
 func (w *BrotliWriter) Write(buffer []byte) (int, error) {
+	return 0, io.EOF
 	comp := w.compressor
 	blockSize := int(comp.GetInputBlockSize())
 	roomFor := blockSize - w.inRingBuffer
