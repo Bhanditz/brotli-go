@@ -283,6 +283,21 @@ func (w *BrotliWriter) Write(buffer []byte) (int, error) {
 	return copied, nil
 }
 
+func (w *BrotliWriter) Flush() error {
+	compressedData, err := w.compressor.writeBrotliData(false, true)
+	if err != nil {
+		return err
+	}
+	w.inRingBuffer = 0
+
+	_, err = w.writer.Write(compressedData)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (w *BrotliWriter) Close() error {
 	compressedData, err := w.compressor.writeBrotliData(true, false)
 	if err != nil {
